@@ -1,0 +1,51 @@
+// Approach 1 ( TC - O(N), SC - O(N) )
+
+int maxProfit(vector<int>& prices) {
+        int n = prices.size();
+        int max_on_right[n];
+        int ans = 0;
+
+        int curr_max = prices[n-1];
+        max_on_right[n-1] = -1;
+
+        for(int i = n-2; i >=0; i--)
+        {
+            if(prices[i] > curr_max)
+            {
+                max_on_right[i] = -1;
+                curr_max = prices[i];
+            }
+
+            else
+            {
+                max_on_right[i] = curr_max;
+            }
+        }
+
+        for(int i = 0; i < n; i++)
+        {
+            if(max_on_right[i] != -1)
+            {
+                ans = max(ans, (max_on_right[i] - prices[i]));
+            }
+        }
+
+        return ans;
+    }
+
+// Approach 2 (TC - O(N), SC - O(1) )
+
+int maxProfit(vector<int>& prices) {
+        int n = prices.size();
+        int maxprofit = 0;
+        int min_till_now = prices[0];
+
+        for(int i = 1; i < n; i++)
+        {
+            int profit = prices[i] - min_till_now;
+            maxprofit = max(profit, maxprofit);
+            min_till_now = min(min_till_now, prices[i]);
+        }
+
+        return maxprofit;
+    }
