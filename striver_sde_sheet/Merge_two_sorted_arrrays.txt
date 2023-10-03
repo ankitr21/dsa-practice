@@ -1,0 +1,94 @@
+// Merge two sorted arrrays. Approach 1 using extra space
+
+void merge(vector<int>& nums1, int m, vector<int>& nums2, int n) {
+        if(m==0){
+            for(int i = 0; i < n; i++){
+                nums1[i] = nums2[i];
+            }
+            return;
+        }
+        if(n == 0){
+            return;
+        }
+
+        int left = 0;
+        int right = 0;
+        int index = 0;
+        vector<int> ans(m+n, 0);
+
+        while(left < m && right < n){
+            if(nums1[left] >= nums2[right]){
+                ans[index] = nums2[right];
+                index++;
+                right++;
+            }
+            else{
+                ans[index] = nums1[left];
+                index++;
+                left++;
+            }
+        }
+
+        while( left < m)
+        {
+            ans[index] = nums1[left];
+            index++;
+            left++;
+        }
+        while( right < n)
+        {
+            ans[index] = nums2[right];
+            index++;
+            right++;
+        }
+
+        for(int i = 0; i < n+m; i++)
+        {
+            nums1[i] = ans[i];
+        }
+
+        return;
+    }
+
+// Approach 2 without using extra space 
+
+void merge(vector<int>& nums1, int m, vector<int>& nums2, int n) {
+        if(m==0){
+            for(int i = 0; i < n; i++){
+                nums1[i] = nums2[i];
+            }
+            return;
+        }
+        if(n == 0){
+            return;
+        }
+
+        int left = m-1;
+        int right = 0;
+
+        while(left >= 0 && right < n)
+        {
+            if(nums1[left] > nums2[right])
+            {
+                swap(nums1[left], nums2[right]);
+                left--;
+                right++;
+            }
+            else{
+                break;
+            }
+        }
+
+        sort(nums1.begin(), nums1.begin()+m);
+        sort(nums2.begin(), nums2.end());
+
+        for(int i = m; i < m+n; i++)
+        {
+            nums1[i] = nums2[i-m];
+        }
+
+        return;
+    }
+
+
+
