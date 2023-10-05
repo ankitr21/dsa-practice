@@ -1,0 +1,48 @@
+vector<int> majorityElement(vector<int>& nums) {
+        int count1 = 0, count2 = 0;
+        int curr1 = INT_MIN, curr2=INT_MIN;
+        int n = nums.size();
+        vector<int> ans;
+
+        for(int i = 0; i < n; i++)
+        {
+            if(count1 == 0 && curr2 != nums[i]){
+                count1 = 1;
+                curr1 = nums[i];
+            }
+            else if(count2 == 0 && curr1 != nums[i]){
+                count2 = 1;
+                curr2 = nums[i];
+            }
+
+            else if(curr1 == nums[i]){
+                count1++;
+            }
+            else if(curr2 == nums[i]){
+                count2++;
+            }
+            else{
+                count2--;
+                count1--;
+            }
+        }
+        count1 = 0;
+        count2 = 0;
+        for(int i = 0; i < n; i++){
+            if(nums[i] == curr1){
+                count1++;
+            }
+            if(nums[i] == curr2){
+                count2++;
+            }
+        }
+
+        if(count1 > n/3){
+            ans.push_back(curr1);
+        }
+        if(count2 > n/3){
+            ans.push_back(curr2);
+        }
+
+        return ans;
+    }
